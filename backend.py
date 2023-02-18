@@ -21,3 +21,11 @@ def set_json_project(granat_name: str, json: dict):
         json = json
     )
     return True
+
+def get_info_about_user(granat_name: str):
+    jwt_token = db.jwt_token_by_granat_name(granat_name)
+    r = requests.get(
+        url + "v1/whoiam",
+        headers = {'Authorization': f'Bearer {jwt_token}'}
+    )
+    return r.json()

@@ -14,7 +14,7 @@ def check_deep(text: str) -> tuple:
     else:
         return True, sp[-1]
     
-btn_profile = types.KeyboardButton("[X]]Мой профиль")
+btn_profile = types.KeyboardButton("Мой профиль")
 btn_write = types.KeyboardButton("✍️Дополнить заявку")
 btn_media = types.KeyboardButton("[X]Медиа")
 btn_money = types.KeyboardButton("[X]Софинансирование")
@@ -90,9 +90,16 @@ class GranatCatBot:
         await message.answer("Checked!")
     
     async def commands(self, message: types.Message):
+
         if not self.redact_now:
-            #if message.text == "Мой профиль":
-            #    await message.answer("Ваш профиль:\n\n\nчёта короче")
+
+            granat_name = db.get_granat_name_by_telegram_id(message.from_id)
+
+            if message.text == "Мой профиль":
+
+                userinfo = backend.get_info_about_user(granat_name = granat_name)
+                await message.answer(f"Ваш профиль:\n\nИмя: {userinfo['name']}\nФамилия: {userinfo['surname']}\nВаш телефон: {userinfo['phone']}\nКороткая ссылка: {userinfo['nickname']}\nВаша роль: {userinfo['role']}")
+
             if message.text == "✍️Дополнить заявку":
                 await message.answer("Общая информация\n\n\nРасполагается здесь!", reply_markup = mkup_write)
             #elif message.text == "💻Медиа":
