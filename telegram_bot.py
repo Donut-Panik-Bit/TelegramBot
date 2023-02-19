@@ -4,6 +4,7 @@
 from aiogram import Bot, Dispatcher, executor, types
 import db
 import backend
+import asyncio
 
 TOKEN = "6098824044:AAEVhw4tU3uhOfPyS9fpUHcgLMim6MZb7jc"
 
@@ -70,6 +71,7 @@ class GranatCatBot:
     async def send_welcome(self, message: types.Message):
 
         user_id = message.from_user.id # Получаем telegram_id
+        print(user_id)
 
         its_deeplink, result_deeplink = check_deep(message.text)
 
@@ -188,3 +190,4 @@ class GranatCatBot:
 if __name__ == "__main__":
     g = GranatCatBot(TOKEN)
     g.start()
+    #asyncio.get_event_loop().run_until_complete(g.bot.send_message(464265794, "Уведомление! Вам пришло важное напоминание"))
